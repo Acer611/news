@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.AnnouncementMapper">
+
+    <!--缓存3分钟-->
+    <cache flushInterval="180000" />
+
+    <select id="all" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        select
+        top 50 n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = '1002'
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        and (n.AppCode is null or n.AppCode = '' or n.AppCode like '%,'+ #{appCode}+',%')
+        <if test="channel != null and channel !=''">
+            and (n.AppStore is null or n.AppStore = '' or n.AppStore like '%,'+ #{channel}+',%')
+        </if>
+        <if test="cityName != null and cityName !=''">
+            and (n.cityName is null or n.cityName = '' or n.cityName like '%,'+ #{cityName}+',%')
+        </if>
+        <if test="UserTags != null and UserTags !=''">
+            and (n.UserTags is null or n.UserTags = '' or n.UserTags like '%,'+ #{UserTags}+',%')
+        </if>
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+
+    <select id="allAvailable" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        select
+        n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = '1002'
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+
+    <select id="all_for_im" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        select
+        n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = '10021'
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+
+    <select id="all_for_mater_im" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+         select
+        n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = '10022'
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+
+    <select id="listAnnoByShijiebeiZhuli" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        select
+        n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN  TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = '10026'
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+
+    <select id="listByCode" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        select
+        n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        INNER JOIN TD_CP_News.dbo.t_newstype t ON t.id = n.typeid and t.State = 1
+        WHERE
+        n.state = 1
+        AND t.code = #{_parameter}
+        AND (getdate() BETWEEN n.StartTime AND n.EndTime)
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+</mapper>

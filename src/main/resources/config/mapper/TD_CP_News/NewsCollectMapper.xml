@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.NewsCollectMapper">
+
+
+    <insert id="collect">
+        insert into TD_CP_News.dbo.T_NewsCollect (NewsID, UserID) VALUES (#{newsid}, #{uid})
+    </insert>
+
+    <delete id="cancel">
+        delete TD_CP_News.dbo.T_NewsCollect where NewsID = #{newsid} and UserID = #{uid}
+    </delete>
+
+    <select id="listAllCollected" resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        SELECT
+       n.*
+        FROM
+        TD_CP_News.dbo.t_news n
+        inner join TD_CP_News.dbo.T_NewsCollect c on c.UserID = #{uid} and c.NewsID = n.ID
+        WHERE n.state = 1
+        ORDER BY
+        isnull(n.OrderNo,0) asc, n.createtime desc, n.id desc
+    </select>
+    <select id="hasCollected" resultType="java.lang.Boolean">
+        select count(1) from TD_CP_News.dbo.T_NewsCollect where UserID = #{uid} and NewsID = #{newid}
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.NewsCommentMapper">
+
+
+    <resultMap id="news" type="td.news.repository.DboNews">
+        <id property="id" column="ID"/>
+        <result property="author" column="Author" />
+        <result property="begin" column="StartTime"/>
+        <result property="create" column="CreateTime"/>
+        <result property="end" column="EndTime"/>
+        <result property="icon" column="IconUrl"/>
+        <result property="link" column="LinkUrl"/>
+        <result property="origin" column="Origin"/>
+        <result property="title" column="Title"/>
+        <result property="update" column="UpdateTime"/>
+    </resultMap>
+
+    <resultMap id="comment" type="td.news.mapper.TD_CP_News.DbComment">
+        <id property="id" column="ID"/>
+        <result property="content" column="Comment"/>
+        <result property="create" column="CreateTime"/>
+        <association property="news" column="NewsID" select="getNewsById"></association>
+    </resultMap>
+
+    <insert id="comment">
+        insert into TD_CP_News.dbo.T_NewsComment
+        (NewsID, UserID, Comment, UserNick, UserAvatar, UserName, AuditState)
+        values
+        (#{newsid}, #{uid}, #{content}, #{nick}, #{avatar}, #{username}, #{AuditState})
+    </insert>
+
+    <delete id="delete">
+        delete TD_CP_News.dbo.T_NewsComment where ID = #{id} and UserID = #{uid}
+    </delete>
+
+    <select id="getNewsById"  resultType="td.news.mapper.TD_CP_News.dbo.DbNews">
+        SELECT * from TD_CP_News.dbo.T_News where ID = #{_parameter} and State = 1
+    </select>
+    <select id="listAll" resultMap="comment">
+        select * from   TD_CP_News.dbo.T_NewsComment where UserID = #{_parameter} order by CreateTime DESC
+    </select>
+
+    <select id="listByNews" resultType="td.news.mapper.TD_CP_News.DbSimpleComment">
+        select * from TD_CP_News.dbo.T_NewsComment
+        where NewsID = #{NewsID} and (UserID = #{UserID} or isnull(AuditState, 1) = 1)
+        order by CreateTime DESC
+    </select>
+
+    <select id="listByNewsOnlyBySelf" resultType="td.news.mapper.TD_CP_News.DbSimpleComment">
+        select * from TD_CP_News.dbo.T_NewsComment
+        where NewsID = #{NewsID} and  UserID = #{UserID}
+        order by CreateTime DESC
+    </select>
+</mapper>

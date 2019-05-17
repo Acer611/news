@@ -1,0 +1,145 @@
+config:
+  redis:
+    master:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    news:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    token:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    scheme:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    ticket:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    user:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    hd:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    data:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    plan:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    liao:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+    cache:
+      host: 10.151.64.3
+      port: 6381
+      password: cykj.com
+
+#  数据库配置
+  db:
+    driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    base:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    cpd:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    sms:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    data:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    hd:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    master:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    news:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    user1:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+    user2:
+      url: jdbc:sqlserver://10.151.64.6:1433
+      username: cdb_cp
+      password: K%2twv9QMnfBaeBs
+
+#  .NET交互接口
+  client:
+    domain: cp.szyunfeng.cn
+    data: http://data.${config.client.domain}/Handler.ashx
+    user: http://user.${config.client.domain}/Handler.ashx
+    trade: http://trade.${config.client.domain}/Handler.ashx
+    trade_4_cdb: http://trade.${config.client.domain}/CDBHandler.ashx
+    base: http://base.${config.client.domain}/Handler.ashx
+    hd: http://hd.${config.client.domain}/Handler.ashx
+
+#    腾讯云配置
+  qqlive:
+    ak: 6edff5e7cfffe3eac31caa3f4844f707
+    pushkey: 82a49548410430aae505e55f9e6696ef
+    bizid: 30020
+    right: true
+    appid: 1257199591
+    im:
+      accounttype: 35600
+      admin: cper_admin
+      sdkappid: 1400127110
+      pkey: -----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgvZ2yBHuMOcLh1mlw\nI2/iYngYYEx7cxDAvyqyid7kaAqhRANCAATKcTXgeFrgPWimKZbJ1JoPgSplo6EW\nArKT5VDBJ2DhKtV76L1hQbmUb0VsIujWnpOqZCZOH5edSvTq6IHBhCcJ\n-----END PRIVATE KEY-----
+
+
+  finance:
+    key: tangdou666
+  task:
+    enable: true
+  icon:
+    lottery:
+      1: http://newcommon-1253410441.file.myqcloud.com/Activity/2017/09/27/2017082814325656.png
+  notification:
+    enable: true
+  api:
+    doc:
+      enable: true
+    auth:
+      time: 600
+      sign:
+        salt: DDACA8492F2C7EA0C6B73FAAE31960xD1
+
+zuul:
+  routes:
+    zst:
+      path: /zst/qmchartdata/**
+      url: http://10.151.64.4:9994/zst/qmchartdata/
+    ydn:
+      path: /ydn/**
+      url: http://10.151.64.4:9994/ydn/
+
+logging:
+  level:
+    td:
+      news: debug
+  path: /opt/workspace/szyunfeng/news/log
+  file:
+    max-size: 10MB
+    max-history: 5

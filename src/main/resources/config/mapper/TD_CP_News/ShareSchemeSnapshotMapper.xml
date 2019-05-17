@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.ShareSchemeSnapshotMapper">
+
+    <select id="queryJhSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where isnull(ShareState, 0) = 0 and IsJh = 1
+        and CreateTime &lt; '2018/08/16'
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+</mapper>

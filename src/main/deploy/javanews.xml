@@ -1,0 +1,17 @@
+﻿<configuration>
+    <id>javanews</id>
+    <name>彩票资讯</name>
+    <description>Java资讯服务</description>
+    <executable>java</executable>
+    <arguments>-jar -server -Xmx512m -Xms512m -Xmn192m NEWS-%version%.jar --spring.profiles.active=qk</arguments>
+    <env name="version" value="1808004"/>
+    <priority>Normal</priority>
+    <stopparentprocessfirst>false</stopparentprocessfirst>
+    <startmode>Automatic</startmode>
+    <waithint>15 sec</waithint>
+    <sleeptime>1 sec</sleeptime>
+    <log mode="roll-by-time">
+        <pattern>yyyyMMdd</pattern>
+        <autoRollAtTime>00:00:00</autoRollAtTime>
+    </log>
+</configuration>

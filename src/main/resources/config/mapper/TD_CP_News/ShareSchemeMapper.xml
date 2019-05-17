@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.ShareSchemeMapper">
+
+
+    <select id="queryAllSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where isnull(ShareState, 0) = 0
+        and CreateTime &lt; #{_parameter}
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+
+    <select id="queryJhSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where isnull(ShareState, 0) = 0 and IsJh = 1
+        and CreateTime &lt; #{_parameter}
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+
+    <select id="queryRegionConfiguredJhSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare
+        where isnull(ShareState, 0) = 0
+        and IsJh = 1
+        and (
+            isnull(FromMaster, 0) = 0
+            <if test="RegionMaster.size() > 0">
+                or
+                UserID in
+                <foreach collection="RegionMaster"  index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        )
+        and CreateTime &lt; #{PageDate}
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+
+    <select id="get" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where ID = #{_parameter}
+    </select>
+
+
+    <select id="queryUserSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where UserID =#{_parameter} and isnull(ShareState, 0) = 0 order by CreateTime desc
+    </select>
+
+    <select id="queryNonMasterSharedScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where UserID =#{UserID} and isnull(FromMaster, 0) = 0 and isnull(ShareState, 0) = 0 and CreateTime &lt; #{PageDate}
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+
+    <select id="queryRegionConfiguredShareScheme" resultType="td.news.mapper.TD_CP_News.dbo.DbShareScheme">
+        select * from TD_CP_News.dbo.T_SchemeShare where isnull(ShareState, 0) = 0
+        and (
+          isnull(FromMaster, 0) = 0
+        <if test="RegionMaster.size() > 0">
+            or
+            UserID in
+            <foreach collection="RegionMaster"  index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        )
+        and CreateTime &lt; #{PageDate}
+        order by  isnull(IsTop, 0) desc, (CASE when  IsTop = 1 then TopTime else getdate() end ) DESC, CreateTime desc
+    </select>
+</mapper>

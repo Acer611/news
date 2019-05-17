@@ -1,0 +1,147 @@
+config:
+  redis:
+    master:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    news:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    token:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    scheme:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    ticket:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    user:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    hd:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    data:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    plan:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    liao:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+    cache:
+      host: 192.168.10.163
+      port: 6399
+      password: 
+
+#  数据库配置
+  db:
+    driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    base:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    cpd:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    sms:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    data:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    hd:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    master:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    news:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    user1:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+    user2:
+      url: jdbc:sqlserver://192.168.10.211:1433
+      username: cp
+      password: "@abc123"
+
+
+#  .NET交互接口
+  client:
+    domain:
+    data: http://192.168.1.212:8092/Handler.ashx
+    user: http://192.168.1.212:8098/Handler.ashx
+    trade: http://192.168.1.212:8088/Handler.ashx
+    trade_4_cdb: http://192.168.1.212:8088/CDBHandler.ashx
+    base: http://192.168.1.212:8091/Handler.ashx
+    hd: http://192.168.1.212:8093/Handler.ashx
+
+
+#    腾讯云配置
+  qqlive:
+    ak: 6edff5e7cfffe3eac31caa3f4844f707
+    pushkey: 82a49548410430aae505e55f9e6696ef
+    bizid: 30020
+    right: true
+    appid: 1257199591
+    im:
+      accounttype: 35600
+      admin: cper_admin
+      sdkappid: 1400127110
+      pkey: -----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgvZ2yBHuMOcLh1mlw\nI2/iYngYYEx7cxDAvyqyid7kaAqhRANCAATKcTXgeFrgPWimKZbJ1JoPgSplo6EW\nArKT5VDBJ2DhKtV76L1hQbmUb0VsIujWnpOqZCZOH5edSvTq6IHBhCcJ\n-----END PRIVATE KEY-----
+
+
+  finance:
+    key: tangdou666
+  task:
+    enable: true
+  icon:
+    lottery:
+      1: http://newcommon-1253410441.file.myqcloud.com/Activity/2017/09/27/2017082814325656.png
+  notification:
+    enable: true
+  api:
+    doc:
+      enable: true
+    auth:
+      time: 600
+      sign:
+        salt: DDACA8492F2C7EA0C6B73FAAE31960xD1
+
+zuul:
+  routes:
+    zst:
+      path: /zst/qmchartdata/**
+      url: http://10.100.3.4:9994/zst/qmchartdata/
+    ydn:
+      path: /ydn/**
+      url: http://10.100.3.4:9994/ydn/
+
+logging:
+  level:
+    td:
+      news: debug
+  path: /opt/workspace/release/news/log
+  file:
+    max-size: 10MB
+    max-history: 5

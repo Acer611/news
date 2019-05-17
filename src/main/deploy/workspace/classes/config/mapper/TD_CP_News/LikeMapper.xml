@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="td.news.mapper.TD_CP_News.LikeMapper">
+
+    <select id="hasLiked" resultType="java.lang.Boolean">
+        select count(1) from TD_CP_News.dbo.T_Like where Target = #{Target} and UserID = #{UserID}
+    </select>
+
+    <select id="listLikedTarget" resultType="java.lang.Long">
+        select Target from TD_CP_News.dbo.T_Like
+        where UserID = #{UserID}
+        and Target in
+        <foreach collection="Target" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
